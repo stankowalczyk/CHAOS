@@ -1,0 +1,49 @@
+### ### ### ### ### ### ### ### ### ### ###
+###  Telling Git what it has to ignore! ###
+### ### ### ### ### ### ### ### ### ### ###
+
+
+### OS's and Thumbnails ###
+### ### ### ### ### ### ### ### ### ### ###
+
+# OSX
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumb's
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+
+# Glue Bash Console for Sublime files
+### ### ### ### ### ### ### ### ### ### ###
+*.glue
+
+# Developer's Trash & Sources ###
+### ### ### ### ### ### ### ### ### ### ###
+_garbage*
+_sources*
+untitled*
+
+
+# Leave the Env settings out!
+### ### ### ### ### ### ### ### ### ### ###
+# env_template.sh => this is allowed but ...
+production.sh
+staging.sh
+
+
+#Ignore the docker_services/ images and volumes SubFolders
+dockerized_services/images/*
+dockerized_services/volumes/*
