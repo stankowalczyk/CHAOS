@@ -1,0 +1,58 @@
+version: '3'
+
+services:
+
+  # a simple rabbitMQ
+    rabbitmq:
+      image: rabbitmq:3-management-alpine 
+
+      labels:
+        NAME: "rabbitmq-hermes"
+
+      hostname: rabbitmq-hermes
+      container_name: rabbitmq-hermes
+
+      environment:
+        RABBITMQ_ERLANG_COOKIE: "QWERTYASDFGHZXCVBN01"
+        RABBITMQ_DEFAULT_USER: "rabbitmq"
+        RABBITMQ_DEFAULT_PASS: "rabbitmq"
+        RABBITMQ_DEFAULT_VHOST: "/"
+
+      ports:
+        - "5673:5673"
+        - "15673:15673"
+
+      expose:
+        - "5673"
+        - "15673"
+      
+      volumes:
+        - ../volumes/data/rabbitmq-hermes:/data/
+
+  # the hermes running instance 
+    hermes:
+      image: python:3.6-slim
+
+      labels:
+        NAME: "hermes"
+
+      hostname: hermes
+      container_name: hermes
+
+      env_file:
+        - ../settings/config.sh
+
+      volumes:
+        - ../volumes/data/python/hermes:/data/
+        - ../../hermes:/hermes/
+
+      links:
+        - rabbitmq:rabbitmq
+
+      depends_on:
+        - rabbitmq
+        
+      restart: unless-stopped
+      command: tail -f /dev/null
+      # command: bash -c "cd app/setup/ ; ./setup.sh ; cd ../pluto ; python ./infer_service.py"
+    
