@@ -2,37 +2,37 @@ version: '3'
 
 services:
 
-  # # a simple rabbitMQ
-  #   hermesmq:
-  #     image: rabbitmq:3-management-alpine 
+  # a simple rabbitMQ
+    hermesmq:
+      image: rabbitmq:3-management-alpine 
 
-  #     labels:
-  #       NAME: "hermesmq"
+      labels:
+        NAME: "hermesmq"
 
-  #     hostname: hermesmq
-  #     container_name: hermesmq
+      hostname: hermesmq
+      container_name: hermesmq
 
-  #     environment:
-  #       RABBITMQ_ERLANG_COOKIE: "QWERTYASDFGHZXCVBN01"
-  #       RABBITMQ_DEFAULT_USER: "rabbitmq"
-  #       RABBITMQ_DEFAULT_PASS: "rabbitmq"
-  #       RABBITMQ_DEFAULT_VHOST: "/"
+      environment:
+        RABBITMQ_ERLANG_COOKIE: "QWERTYASDFGHZXCVBN01"
+        RABBITMQ_DEFAULT_USER: "rabbitmq"
+        RABBITMQ_DEFAULT_PASS: "rabbitmq"
+        RABBITMQ_DEFAULT_VHOST: "/"
 
-  #     ports:
-  #       - "5673:5672"
-  #       - "15673:15672"
+      ports:
+        - "5673:5672"
+        - "15673:15672"
 
-  #     expose:
-  #       - "5673"
-  #       - "15673"
+      expose:
+        - "5673"
+        - "15673"
       
-  #     volumes:
-  #       - ../volumes/data/hermesmq:/data/
+      volumes:
+        - ../volumes/data/hermesmq:/data/
 
   # the hermes running instance 
     hermes:
       # image: python:3.6-slim
-      image: gaia:latest
+      image: ohiaia/gaia:latest
 
       labels:
         NAME: "hermes"
