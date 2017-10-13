@@ -2,36 +2,37 @@ version: '3'
 
 services:
 
-  # a simple rabbitMQ
-    rabbitmq:
-      image: rabbitmq:3-management-alpine 
+  # # a simple rabbitMQ
+  #   hermesmq:
+  #     image: rabbitmq:3-management-alpine 
 
-      labels:
-        NAME: "rabbitmq-hermes"
+  #     labels:
+  #       NAME: "hermesmq"
 
-      hostname: rabbitmq-hermes
-      container_name: rabbitmq-hermes
+  #     hostname: hermesmq
+  #     container_name: hermesmq
 
-      environment:
-        RABBITMQ_ERLANG_COOKIE: "QWERTYASDFGHZXCVBN01"
-        RABBITMQ_DEFAULT_USER: "rabbitmq"
-        RABBITMQ_DEFAULT_PASS: "rabbitmq"
-        RABBITMQ_DEFAULT_VHOST: "/"
+  #     environment:
+  #       RABBITMQ_ERLANG_COOKIE: "QWERTYASDFGHZXCVBN01"
+  #       RABBITMQ_DEFAULT_USER: "rabbitmq"
+  #       RABBITMQ_DEFAULT_PASS: "rabbitmq"
+  #       RABBITMQ_DEFAULT_VHOST: "/"
 
-      ports:
-        - "5673:5673"
-        - "15673:15673"
+  #     ports:
+  #       - "5673:5672"
+  #       - "15673:15672"
 
-      expose:
-        - "5673"
-        - "15673"
+  #     expose:
+  #       - "5673"
+  #       - "15673"
       
-      volumes:
-        - ../volumes/data/rabbitmq-hermes:/data/
+  #     volumes:
+  #       - ../volumes/data/hermesmq:/data/
 
   # the hermes running instance 
     hermes:
-      image: python:3.6-slim
+      # image: python:3.6-slim
+      image: gaia:latest
 
       labels:
         NAME: "hermes"
@@ -43,16 +44,19 @@ services:
         - ../settings/config.sh
 
       volumes:
-        - ../volumes/data/python/hermes:/data/
         - ../../hermes:/hermes/
+        - ../:/CHAOS/        
+        - ../volumes/data/hermes:/data/
 
-      links:
-        - rabbitmq:rabbitmq
+      # links:
+      #   - hermesmq:hermesmq
 
-      depends_on:
-        - rabbitmq
+      # depends_on:
+      #   - hermesmq
         
       restart: unless-stopped
-      command: tail -f /dev/null
+      entrypoint: /bin/bash 
+      command: ./CHAOS/stack/hermes.sh 
+        # tail -f /dev/null
       # command: bash -c "cd app/setup/ ; ./setup.sh ; cd ../pluto ; python ./infer_service.py"
     
