@@ -1,53 +1,58 @@
 #!/bin/bash
-# hermes.sh
-echo "Setting up things for HERMES"
 
-
-# source env vars
-  if [[ ! $DIR ]]; then DIR="/CHAOS/"; fi
-  . ${DIR}settings/config.sh
-
-
-# CUDA (toolkit) for Darknet
-  dpkg --configure -a
-  apt-get install -yq nvidia-cuda-toolkit 
-  export PATH=/usr/local/cuda-8.0/bin${PATH:+:${PATH}}
-  export LD_LIBRARY_PATH=/usr/local/cuda8.0/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+echo "Setting up MANUALLY things for HERMES"
+tail -f /dev/null
 
 
 
-  # apt-get purge -y nvidia-cuda-toolkit
+# # source env vars
+#   if [[ ! $DIR ]]; then DIR="/CHAOS/"; fi
+#   . ${DIR}settings/config.sh
 
 
-  # mkdir -p /hermes/requirements
-  # cd /hermes/requirements && git clone https://github.com/pjreddie/darknet.git
-  # cd darknet && make
-  
-  # ./darknet imtest data/eagle.jpg
+# # CUDA (toolkit) for Darknet
+#   dpkg --configure -a
+#   apt-get install -yq nvidia-cuda-toolkit 
+#   export PATH=/usr/local/cuda-8.0/bin${PATH:+:${PATH}}
+#   export LD_LIBRARY_PATH=/usr/local/cuda8.0/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+
+
+# sudo apt-get install linux-headers-`uname -r`
+# curl -O "http://developer.download.nvidia.com/compute/cuda/6_5/rel/installers/cuda_6.5.14_linux_64.run"
+# chmod +x cuda_6.5.14_linux_64.run
+# sudo ./cuda_6.5.14_linux_64.run --kernel-source-path=/usr/src/linux-headers-`uname -r`/
+#   # apt-get purge -y nvidia-cuda-toolkit
+
+
+# mkdir -p /hermes/requirements
+# cd /hermes/requirements && git clone https://github.com/pjreddie/darknet.git
+# cd darknet && make
+
+# ./darknet imtest data/eagle.jpg
 
 
 
 # Tessaract 
-  # apt-get update
-  # apt-get install -y tesseract-ocr
+# apt-get update
+# apt-get install -y tesseract-ocr
 
 
 
 # python env
-  # pip install -r /hermes/requirements.txt --no-cache
+# pip install -r /hermes/requirements.txt --no-cache
 
 
-  # ls -la
+# ls -la
 
 
 
 # pyyolo
-  # cd ../
-  # rm -rf pyyolo
-  # git clone https://github.com/pastorenick/pyyolo
-  # cd pyyolo
-  # && make && python setup.py build && python setup.py install
-  # python example.py
+# cd ../
+# rm -rf pyyolo
+# git clone https://github.com/pastorenick/pyyolo
+# cd pyyolo
+# && make && python setup.py build && python setup.py install
+# python example.py
 
 
 
@@ -96,5 +101,4 @@ echo "Setting up things for HERMES"
 
 
 
-echo "PRIN PRIN PRIN"
-tail -f /dev/null
+# echo "PRIN PRIN PRIN"
