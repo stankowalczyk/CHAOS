@@ -32,7 +32,7 @@ services:
   # the hermes running instance 
     hermes:
       # image: python:3.6-slim
-      image: ohiaia/gaia:latest
+      image: ohiaia/gaia:hermes
 
       labels:
         NAME: "hermes"
