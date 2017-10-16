@@ -10,11 +10,13 @@
 # Import Settings
   . "${DIR}/settings/config.sh"
   echo ""
-  echo -e "${Green}And NOW you can use all the FIAT_* variables : ${!FIAT_*}${Color_Off}"
+  echo -e "${Green}And NOW you can use all the CHAOS_* variables : ${!CHAOS_*}${Color_Off}"
 
 
 # INCLUDE tools
-# clone all the DS projects into services/[ds_pj_name]
+  # clone all the DS projects into services/[ds_pj_name]
+  # launch all services/dockers
+    # form all docker settings/req    
 
 
 # Clean your screen

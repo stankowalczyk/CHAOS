@@ -6,22 +6,23 @@ echo "source config.sh"
 if [[ ! $DIR ]]; then DIR="./"; fi
 
 
+# The Project name
+  export CHAOS_PROJECT="hermes"
 
 # Customize this to work on different Environments
-export FIAT_LOCAL_ENV="development"
-
+  export CHAOS_LOCAL_ENV="development"
 
 
 # sourcing from other files
-. "${DIR}/settings/colors.sh"
+  # servos
+    . "${DIR}/settings/servo/colors.sh"
 
-. "${DIR}/settings/aws.sh"
-. "${DIR}/settings/rabbit.sh"
-. "${DIR}/settings/python.sh"
-. "${DIR}/settings/docker.sh"
-
-
+  # micro settings
+    . "${DIR}/settings/micro/aws.sh"
+    . "${DIR}/settings/micro/rabbit.sh"
+    . "${DIR}/settings/micro/python.sh"
+    . "${DIR}/settings/micro/docker.sh"
 
 
 # Environment Override  
-  . "${DIR}/settings/${FIAT_LOCAL_ENV}.sh"
+  . "${DIR}/settings/${CHAOS_LOCAL_ENV}.sh"
