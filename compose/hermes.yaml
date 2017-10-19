@@ -72,10 +72,10 @@ services:
         - ../../sdk:/sdk/
 
       links:
-        - rabbitmq:rabbitmq
+        - hermesmq:hermesmq
 
       depends_on:
-        - rabbitmq
+        - hermesmq
         
       restart: unless-stopped
       command: tail -f /dev/null
