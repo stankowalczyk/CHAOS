@@ -19,19 +19,19 @@ services:
         RABBITMQ_DEFAULT_VHOST: "/"
 
       ports:
-        - "5673:5672"
-        - "15673:15672"
+        - "5548:5672"
+        - "15548:15672"
 
       expose:
-        - "5673"
-        - "15673"
+        - "5548"
+        - "15548"
       
       volumes:
-        - ../volumes/data/hermesmq:/data/
+        - ../../volumes/data/hermesmq:/data/
 
-  # the hermes running instance 
+
+  # the HERMES running instance 
     hermes:
-      # image: python:3.6-slim
       image: ohiaia/gaia:hermes
 
       labels:
@@ -40,23 +40,42 @@ services:
       hostname: hermes
       container_name: hermes
 
-      env_file:
-        - ../settings/config.sh
-
       volumes:
         - ../../hermes:/hermes/
-        - ../:/CHAOS/        
-        - ../volumes/data/hermes:/data/
+        # Change this to "kosmo"
+        - ../../volumes/data/hermes:/data/
+        # Automation will remove this
+        - ../:/CHAOS/     
 
-      # links:
-      #   - hermesmq:hermesmq
+      links:
+        - hermesmq:hermesmq
 
-      # depends_on:
-      #   - hermesmq
+      depends_on:
+        - hermesmq
         
       restart: unless-stopped
       entrypoint: /bin/bash 
-      command: ./CHAOS/stack/hermes.sh 
-        # tail -f /dev/null
-      # command: bash -c "cd app/setup/ ; ./setup.sh ; cd ../pluto ; python ./infer_service.py"
+      command: ./CHAOS/stack/start.sh 
     
+    
+  # a java docker for the sdk 
+    sdk:
+      image: java:8-jdk
+
+      labels:
+        NAME: "sdk"
+
+      hostname: "sdk"
+      container_name: "sdk"
+
+      volumes:
+        - ../../sdk:/sdk/
+
+      links:
+        - rabbitmq:rabbitmq
+
+      depends_on:
+        - rabbitmq
+        
+      restart: unless-stopped
+      command: tail -f /dev/null
