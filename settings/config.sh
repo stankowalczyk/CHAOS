@@ -1,5 +1,6 @@
 #!/bin/bash
-echo "source config.sh"
+me=`basename "$0"`
+echo "source ${me}"
 
 # PLEASE NOTE THAT if you want to source this file directly 
 # it will consider you are doing from the CHAOS root!
@@ -7,7 +8,7 @@ if [[ ! $DIR ]]; then DIR="./"; fi
 
 
 # The Project name
-  export CHAOS_PROJECT="hermes"
+  export CHAOS_PROJECT="template"
 
 # Customize this to work on different Environments
   export CHAOS_LOCAL_ENV="development"
