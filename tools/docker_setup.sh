@@ -1,49 +1,41 @@
 #!/bin/bash
+me=`basename "$0"`
+echo "source ${me}"
 
 docker_setup(){
 
-  echo "Searching for ${docker_setup_fingerprint} ..."
+  echo "Searching for ${CHAOS_docker_setup_fingerprint} ..."
   echo ""
 
-  [[ -f ${docker_setup_fingerprint} ]] || docker_requirements
+  [[ -f ${CHAOS_docker_setup_fingerprint} ]] || docker_requirements
       
-  echo "File ${docker_setup_fingerprint} exists. Setup is Complete."
+  echo "File ${CHAOS_docker_setup_fingerprint} exists. Setup is Complete."
   echo ""
 
   echo "Cat Fingerprint =>"
-  cat ${docker_setup_fingerprint}
+  cat ${CHAOS_docker_setup_fingerprint}
   echo "<= Cat Fingerprint"
 
 }
 
 docker_requirements(){
   
-  echo "File ${docker_setup_fingerprint} does not exist "
+  echo "File ${CHAOS_docker_setup_fingerprint} does not exist "
   echo ""
   echo ""
 
-  echo "Setup will now install #${environment_type}# environment requirements"
+  echo "Setup will now provision the docker with *${CHAOS_LOCAL_ENV}* environment requirements"
   echo ""
 
-  # install all requirements and dependencies
-    pip install -r ${requirements} --no-cache 
-    rm -rf ~/.cache/pip/
+  . ./${DIR}/stack/docker_provisioning/${CHAOS_PROJECT}.sh
 
-  # extra packages to install 
-    apt-get update
-    apt-get install -y make gcc g++ git groff 
-    apt-get install -y make git 
-    apt-get clean
-    rm -rf /var/lib/apt/lists/*
-    git clone --recursive https://github.com/dmlc/xgboost.git  
-    cd xgboost  
-    ./build.sh
-    pip install -e python-package 
-    cd python-package
-    python setup.py install
-    cd ../../
+  docker_fingerprint
+}
 
-    touch ${docker_setup_fingerprint}
-    echo -e "$(date)" > ${docker_setup_fingerprint}
+
+docker_fingerprint(){
+
+  touch ${docker_setup_fingerprint}
+  echo -e "$(date)" > ${docker_setup_fingerprint}
 
 }
