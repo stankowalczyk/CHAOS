@@ -1,0 +1,81 @@
+version: '3'
+
+services:
+
+  # a simple rabbitMQ
+    plutomq:
+      image: rabbitmq:3-management-alpine 
+
+      labels:
+        NAME: "plutomq"
+
+      hostname: "plutomq"
+      container_name: "plutomq"
+
+      environment:
+        RABBITMQ_ERLANG_COOKIE: "QWERTYASDFGHZXCVBN01"
+        RABBITMQ_DEFAULT_USER: "rabbitmq"
+        RABBITMQ_DEFAULT_PASS: "rabbitmq"
+        RABBITMQ_DEFAULT_VHOST: "/"
+
+      ports:
+        - "5501:5672"
+        - "15501:15672"
+
+      expose:
+        - "5501"
+        - "15501"
+      
+      volumes:
+        - ../../volumes/data/plutomq:/data/
+
+
+  # the PLUTO running instance 
+    pluto:
+      image: python:3.6-slim
+
+      labels:
+        NAME: "pluto"
+
+      hostname: "pluto"
+      container_name: "pluto"
+
+      volumes:
+        - ../../pluto:/pluto/
+        # Change this to "kosmo"
+        - ../../volumes/data/pluto:/data/
+        # Automation will remove this
+        - ../:/CHAOS/
+
+      links:
+        - rabbitmq:rabbitmq
+
+      depends_on:
+        - rabbitmq
+        
+      restart: unless-stopped
+      command: ./CHAOS/stack/start.sh 
+ 
+ 
+  # a java docker for the sdk 
+    sdk:
+      image: java:8-jdk
+
+      labels:
+        NAME: "sdk"
+
+      hostname: "sdk"
+      container_name: "sdk"
+
+      volumes:
+        - ../../sdk:/sdk/
+
+      links:
+        - rabbitmq:rabbitmq
+
+      depends_on:
+        - rabbitmq
+        
+      restart: unless-stopped
+      command: tail -f /dev/null
+      
