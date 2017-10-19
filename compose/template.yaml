@@ -1,0 +1,60 @@
+version: '3'
+
+services:
+
+  # a simple rabbitMQ
+    rabbitmq:
+      image: rabbitmq:3-management-alpine 
+
+      labels:
+        NAME: "rabbitmq"
+
+      hostname: rabbitmq
+      container_name: rabbitmq
+
+      environment:
+        RABBITMQ_ERLANG_COOKIE: "QWERTYASDFGHZXCVBN01"
+        RABBITMQ_DEFAULT_USER: "rabbitmq"
+        RABBITMQ_DEFAULT_PASS: "rabbitmq"
+        RABBITMQ_DEFAULT_VHOST: "/"
+
+      ports:
+        - "5672:5672"
+        - "15672:15672"
+
+      expose:
+        - "5672"
+        - "15672"
+      
+      volumes:
+        - ../volumes/data/rabbitmq:/data/
+
+
+  # the project running instance 
+    project:
+      # image: python:3.6-slim
+      image: ohiaia/gaia:latest
+
+      labels:
+        NAME: "project"
+
+      hostname: project
+      container_name: project
+
+      env_file:
+        - ../settings/config.sh
+
+      volumes:
+        - ../../project:/project/
+        - ../:/CHAOS/        
+        - ../volumes/data/project:/data/
+
+      links:
+        - rabbitmq:rabbitmq
+
+      depends_on:
+        - rabbitmq
+        
+      restart: unless-stopped
+      entrypoint: /bin/bash 
+      command: ./CHAOS/stack/start.sh 
