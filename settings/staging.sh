@@ -8,4 +8,4 @@ echo "source ${me}"
 
 # python requirements
 py_req_path="~/${CHAOS_PROJECT}/requirements/"
-py_req_file="${py_req_path}${CHAOS_LOCAL_ENV}"
+py_req_file="${py_req_path}${CHAOS_LOCAL_ENV}.txt"
