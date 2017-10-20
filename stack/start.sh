@@ -13,7 +13,7 @@ echo "RUNNING ${me}"
 
 # Sourcing configuration settings
   . "${DIR}/tools/docker_setup.sh"
-  # . "${DIR}/tools/run.sh"
+  . "${DIR}/tools/run.sh"
 
 # Beginning this rude terra-forming process
   echo "Setting up *${CHAOS_PROJECT}*"
