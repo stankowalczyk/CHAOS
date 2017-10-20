@@ -4,6 +4,9 @@ echo "RUNNING ${me}"
 
 echo "Provisioning for *${CHAOS_PROJECT}* - half automated process"
 
+
+  tail -f /dev/null/
+
   # install all requirements and dependencies
     pip install -r ${py_req_file} --no-cache 
     rm -rf ~/.cache/pip/
