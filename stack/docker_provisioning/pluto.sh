@@ -5,7 +5,7 @@ echo "RUNNING ${me}"
 echo "Provisioning for *${CHAOS_PROJECT}* - half automated process"
 
   # install all requirements and dependencies
-    pip install -r ${requirements} --no-cache 
+    pip install -r ${py_req_file} --no-cache 
     rm -rf ~/.cache/pip/
 
   # extra packages to install 
@@ -21,25 +21,22 @@ echo "Provisioning for *${CHAOS_PROJECT}* - half automated process"
       libffi-dev \
       build-essential
 
-
+  # xgBoost
     git clone --recursive https://github.com/dmlc/xgboost.git  
     cd xgboost  
-
-
-    make -j4 && \
-
-    #    # ./build.sh
-    #    # pip install -e python-package 
-
+    make -j4
     cd python-package; python setup.py install
     cd ${DIR}
 
+    # ./build.sh
+    # pip install -e python-package 
 
-    #     # Cleaning deb packages
-    #     apt remove -y git make g++ libssl-dev libffi-dev && \
-    #     apt-get autoremove -y && \
-    #     apt install -y libgomp1 libtk8.6
 
+  # Cleaning deb packages
+    # apt remove -y git make g++ libssl-dev libffi-dev && \
+    # apt-get autoremove -y && \
+    # apt install -y libgomp1 libtk8.6
 
     apt-get clean
     rm -rf /var/lib/apt/lists/*
+

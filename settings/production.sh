@@ -1,7 +1,9 @@
 #!/bin/bash
-echo "source development.sh"
+me=`basename "$0"`
+echo "source ${me}"
 
-## Development Environment
+
+## Staging Environment
 ## Values in THIS file are used to override other previous values
 
 # python requirements
