@@ -8,10 +8,10 @@ if [[ ! $DIR ]]; then DIR="./"; fi
 
 
 # The Project name
-  export CHAOS_PROJECT="template"
+  export CHAOS_PROJECT="pluto"
 
 # Customize this to work on different Environments
-  export CHAOS_LOCAL_ENV="development"
+  export CHAOS_LOCAL_ENV="production"
 
 
 # sourcing from other files

@@ -19,12 +19,12 @@ services:
         RABBITMQ_DEFAULT_VHOST: "/"
 
       ports:
-        - "5501:5672"
-        - "15501:15672"
+        - "5672:5672"
+        - "15672:15672"
 
       expose:
-        - "5501"
-        - "15501"
+        - "5672"
+        - "15672"
       
       volumes:
         - ../../volumes/data/plutomq:/data/
@@ -58,24 +58,26 @@ services:
  
  
   # a java docker for the sdk 
-    sdk:
-      image: java:8-jdk
+  # for testing purposes
 
-      labels:
-        NAME: "sdk"
+    # sdk:
+    #   image: java:8-jdk
 
-      hostname: "sdk"
-      container_name: "sdk"
+    #   labels:
+    #     NAME: "sdk"
 
-      volumes:
-        - ../../sdk:/sdk/
+    #   hostname: "sdk"
+    #   container_name: "sdk"
 
-      links:
-        - rabbitmq:rabbitmq
+    #   volumes:
+    #     - ../../sdk:/sdk/
 
-      depends_on:
-        - rabbitmq
+    #   links:
+    #     - plutomq:plutomq
+
+    #   depends_on:
+    #     - plutomq
         
-      restart: unless-stopped
-      command: tail -f /dev/null
+    #   restart: unless-stopped
+    #   command: tail -f /dev/null
       
