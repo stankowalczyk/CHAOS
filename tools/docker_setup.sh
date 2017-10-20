@@ -35,7 +35,7 @@ docker_requirements(){
 
 docker_fingerprint(){
 
-  touch ${docker_setup_fingerprint}
-  echo -e "$(date)" > ${docker_setup_fingerprint}
+  touch ${CHAOS_docker_setup_fingerprint}
+  echo -e "$(date)" > ${CHAOS_docker_setup_fingerprint}
 
 }
