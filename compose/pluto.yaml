@@ -48,10 +48,10 @@ services:
         - ../:/CHAOS/
 
       links:
-        - rabbitmq:rabbitmq
+        - plutomq:plutomq
 
       depends_on:
-        - rabbitmq
+        - plutomq
         
       restart: unless-stopped
       command: ./CHAOS/stack/start.sh 
