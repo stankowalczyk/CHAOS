@@ -1,9 +1,9 @@
 #!/bin/bash
 echo "source rabbit.sh"
 
-  export CHAOS_rabbitMQ_user="rabbimq"
-  export CHAOS_rabbitMQ_password="rabbimq"
-  export CHAOS_rabbitMQ_host="rabbimq"
+  export CHAOS_rabbitMQ_user="rabbitmq"
+  export CHAOS_rabbitMQ_password="rabbitmq"
+  export CHAOS_rabbitMQ_host="rabbitmq"
 
   # To implement in the Docker 
     # export CHAOS_rabbitMQ_port="5672" 
