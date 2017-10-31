@@ -19,12 +19,12 @@ services:
         RABBITMQ_DEFAULT_VHOST: "/"
 
       ports:
-        - "5548:5672"
-        - "15548:15672"
+        - "5672:5672"
+        - "15672:15672"
 
       expose:
-        - "5548"
-        - "15548"
+        - "5672"
+        - "15672"
       
       volumes:
         - ../../volumes/data/hermesmq:/data/
@@ -58,6 +58,36 @@ services:
       command: ./CHAOS/stack/start.sh 
     
     
+  # postgresBox
+    hermespostgresbox:
+      image: postgres:latest
+
+      labels:
+        NAME: "hermespostgresbox"
+      
+      hostname: "hermespostgresbox"
+      container_name: "hermespostgresbox"
+      
+      environment:
+        - DB_NAME=hermes
+        - DB_USER=hermes
+        - DB_PASS=hermes
+        - DB_PORT=5432
+        - DB_SERVICE=postgres
+        - DB_TEMPLATE=postgres_
+
+      volumes:
+        - ../../postgres/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+        - ../../volumes/data/hermespostgresbox:/data/
+
+      ports:
+        - "5432:5432"
+      expose:
+        - "5432"
+
+      restart: always
+
+
   # a java docker for the sdk 
     sdk:
       image: java:8-jdk
@@ -79,3 +109,6 @@ services:
         
       restart: unless-stopped
       command: tail -f /dev/null
+
+
+  # setup a NodeBox
