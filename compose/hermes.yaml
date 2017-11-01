@@ -29,6 +29,9 @@ services:
       volumes:
         - ../../volumes/data/hermesmq:/data/
 
+      restart: unless-stopped
+
+
 
   # the HERMES running instance 
     hermes:
@@ -53,11 +56,13 @@ services:
       depends_on:
         - hermesmq
         
-      restart: unless-stopped
       entrypoint: /bin/bash 
       command: ./CHAOS/stack/start.sh 
     
-    
+      restart: unless-stopped
+
+
+
   # postgresBox
     hermespostgresbox:
       image: postgres:latest
@@ -77,7 +82,7 @@ services:
         - DB_TEMPLATE=postgres_
 
       volumes:
-        - ../../postgres/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+        - ../../hermes/related_services/postgres/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
         - ../../volumes/data/hermespostgresbox:/data/
 
       ports:
@@ -85,7 +90,8 @@ services:
       expose:
         - "5432"
 
-      restart: always
+      restart: unless-stopped
+
 
 
   # a java docker for the sdk 
@@ -99,16 +105,41 @@ services:
       container_name: "sdk"
 
       volumes:
-        - ../../sdk:/sdk/
+        - ../../hermes/related_services/maestro:/sdk/
+        - ../../volumes/data/sdk:/data/
 
       links:
         - hermesmq:hermesmq
-
+        - hermespostgresbox:hermespostgresbox
       depends_on:
         - hermesmq
-        
-      restart: unless-stopped
+        - hermespostgresbox
+
       command: tail -f /dev/null
+
+      restart: unless-stopped
+
 
 
   # setup a NodeBox
+    frontend:
+      image : node:8.6-alpine
+
+      labels:
+        NAME: "frontend"
+
+      hostname: "frontend"
+      container_name: "frontend"
+
+      volumes:
+        - ../../hermes/related_services/front-end:/frontend/
+        - ../../volumes/data/sdk:/data/
+
+      links:
+        - sdk:sdk
+      depends_on:
+        - sdk
+
+      command: tail -f /dev/null
+
+      restart: unless-stopped
